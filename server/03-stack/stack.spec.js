@@ -12,7 +12,7 @@ describe('a stack', () => {
             isEmpty: () => {return elements.length === 0;},
             size: () => {return elements.length;},
             push: (element) => {
-                if (elements.length === 3) throw new Error('stack capacity exceeded');
+                if (elements.length === capacity) throw new Error('stack capacity exceeded');
                 elements.push(element);
             },
             pop: () => {
