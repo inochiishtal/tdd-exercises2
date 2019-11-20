@@ -1,6 +1,6 @@
-const {REGULAR, NEW_RELEASE, CHILDRENS} = require('./movie-codes');
+const {Movie} = require('./movie');
 
-let makeCustomerFrom = (name) => {
+let Customer = (name) => {
   let rentals = [];
 
   return {
@@ -17,37 +17,13 @@ let makeCustomerFrom = (name) => {
         let rental = rentals[i];
 
         //noinspection Eslint
-        switch (rental.movie.priceCode) {
-          case REGULAR:
-
-            subTotal += 2;
-            if (rental.daysRented > 2) {
-              subTotal += (rental.daysRented - 2) * 1.5;
-            }
-            break;
-
-          case NEW_RELEASE:
-
-            subTotal += rental.daysRented * 3;
-            break;
-
-          case CHILDRENS:
-
-            subTotal += 1.5;
-            if (rental.daysRented > 3) {
-              subTotal += (rental.daysRented - 3) * 1.5;
-            }
-
-            break;
-          default:
-
-        }
+        subTotal = rental.getCharge();
 
         // add frequent renter points
         frequentRenterPoints++;
 
         // add bonus for a two day new release rental
-        if ((rental.movie.priceCode === NEW_RELEASE) &&
+        if ((rental.movie.priceCode === Movie.NEW_RELEASE) &&
             rental.daysRented > 1) frequentRenterPoints++;
 
         //show figures for this rental
@@ -66,4 +42,4 @@ let makeCustomerFrom = (name) => {
   };
 };
 
-module.exports = {makeCustomerFrom};
+module.exports = {Customer};
